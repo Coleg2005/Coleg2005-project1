@@ -270,10 +270,6 @@ public class Project1_Tester {
     s1.makeEnd();
     s4.makeEnd();
 
-    System.out.println("Exp 1; Mine: " + s1.tripLength(s2));
-    System.out.println("Exp 3; Mine: " + s1.tripLength(s4));
-    System.out.println("Exp 0; Mine: " + s1.tripLength(s1));
-
     assertEquals(1, s1.tripLength(s2));
     assertEquals(3, s1.tripLength(s4));
     assertEquals(0, s1.tripLength(s1));

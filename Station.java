@@ -2,12 +2,14 @@ import java.util.*;
 
 public class Station {
 
+    // fields for all stations
     Station next;
     Station prev;
     String name;
     String line;
     boolean available = true;
 
+    // constructer
     public Station(String line, String name){
         this.line = line;
         this.name = name;
@@ -15,7 +17,7 @@ public class Station {
 
     public String toString(){
 
-        //"STATION Museum: pink line, in service: true, previous station: none, next station: none"
+        // also ugly but builds the fields into strings
         String avail;
         if(available == true){
             avail = "true";
@@ -51,7 +53,7 @@ public class Station {
     public int helper(Station cur, Station dest, ArrayList<Station> visited){
 
         // base cases
-        // I don't even know how this would happen but checks
+        // Could only happen if there was no endstation
         if(cur == null){
             return -1;
         }
@@ -70,16 +72,16 @@ public class Station {
         // if an error is not returned increases length
         int nextStop = helper(cur.next, dest, visited);
         if(nextStop != -1){
-            return ++nextStop;
+            return 1 + nextStop;
         }
 
         // if cur is a transferstation, goes through each of the tranfers until it finds the dest
         if(cur instanceof TransferStation){
-            TransferStation current = (TransferStation) cur;
-            for(int i = 0; i < current.otherStations.size(); i++){
-                int transferStop = helper(cur, dest, visited);
+            TransferStation transfer = (TransferStation) cur;
+            for(int i = 0; i < transfer.otherStations.size(); i++){
+                int transferStop = helper(transfer.otherStations.get(i) , dest, visited);
                 if(transferStop != -1){
-                    return ++transferStop;
+                    return 1 + transferStop;
                 }
             }
         }
@@ -90,20 +92,24 @@ public class Station {
 
     public void connect(Station a){
 
+        // is this is a transfer station and this has a next, sends it to be added to the otherstatiosn aList, makes it so that primary line stops arent added to alist
         if(this instanceof TransferStation && this.next != null){
             TransferStation temp = (TransferStation) this;
             temp.addTransferStationNext(a);
         }
+        // saem thing as above, i probably only need one to be chekcing all this but Im not gonna mess with the code
         if(a instanceof TransferStation && a.prev != null){
             TransferStation temp = (TransferStation) a;
             temp.addTransferStationPrev(this);
         }
+        // if a is an endstations makes prev and next the same
         if(a instanceof EndStation){
             a.next = this;
             a.prev = this;
             this.next = a;
             return;
         }
+        // basic connect
         if(this.next == null){
             this.next = a;
         }
@@ -113,23 +119,24 @@ public class Station {
 
     }
 
+    // basic
     public void addNext(Station a){
-
         this.next = a;
         a.prev = this;
     }
 
+    // basic
     public void addPrev(Station a){
-
         this.prev = a;
         a.next = this;
     }
 
+    // basic
     public boolean isAvailable(){
-
         return this.available;
     }
 
+    // basic 
     public void switchAvailable(){
         if(this.available == false){
             this.available = true;
@@ -139,6 +146,7 @@ public class Station {
         return;
     }
 
+    // basic
     public boolean equals(Station a){
         if(this.line == a.line && this.name == a.name){
             return true;

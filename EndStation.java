@@ -1,11 +1,12 @@
 public class EndStation extends Station{
 
+    // constructer
     public EndStation(String line, String name){
         super(line,name);
     }
 
+    // makes next and prev the same
     public void makeEnd(){
-
         if(next != null){
             this.prev = this.next;
         } else {
@@ -13,15 +14,15 @@ public class EndStation extends Station{
         }
     }
 
+    // connects them so that next and prev are the same
     public void connect(Station a){
         this.prev = a;
         this.next = a;
         a.prev = this;
     }
 
+    // Builds the fields into strings
     public String toString(){
-
-        //"STATION Museum: pink line, in service: true, previous station: none, next station: none"
         String avail;
         if(available == true){
             avail = "true";
