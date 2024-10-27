@@ -11,7 +11,7 @@ public class TransferStation extends Station{
 
     public void addTransferStationPrev(Station a){
 
-        if(!otherStations.contains(a)){
+        if(!otherStations.contains(a) && this.next != a && this.prev != a){
             otherStations.add(a);
         }
         if(a.next == null){
@@ -19,13 +19,13 @@ public class TransferStation extends Station{
         }
     }
 
-    public void addTransferStationNext(Station b){
+    public void addTransferStationNext(Station a){
 
-        if(!otherStations.contains(b)){
-            otherStations.add(b);
+        if(!otherStations.contains(a) && this.next != a && this.prev != a){
+            otherStations.add(a);
         }
-        if(b.prev == null){
-            b.prev = this;
+        if(a.prev == null){
+            a.prev = this;
         }
     }
 
@@ -56,10 +56,7 @@ public class TransferStation extends Station{
         String transferNext = "";
         for(int i = 0; i < otherStations.size(); i++)
         {
-            //if(otherStations.get(i) != this.next && otherStations.get(i) != this.prev){
-                System.out.println(i + ": " + otherStations.get(i).toString());
-                transferNext += "\t" + otherStations.get(i).toString() + "\n";
-            //}
+            transferNext += "\t" + otherStations.get(i).toString() + "\n";
         } 
         return "TRANSFERSTATION " + name + ": " + line + " line, in service: " + avail + ", previous station: " + temp + ", next station: " + temp2 + "\n\tTransfers: \n" + transferNext;
 

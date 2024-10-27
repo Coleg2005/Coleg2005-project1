@@ -42,6 +42,7 @@ public class Station {
 
     public int tripLength(Station a){
         
+        // Initializes the arrayList of visited stops and returns the outout of the recursive function
         ArrayList<Station> visited = new ArrayList<>();
         return helper(this, a, visited);
 
@@ -49,49 +50,59 @@ public class Station {
 
     public int helper(Station cur, Station dest, ArrayList<Station> visited){
 
+        // base cases
+        // I don't even know how this would happen but checks
         if(cur == null){
             return -1;
         }
+        // if the stops had already been visited, returns -1
         if(visited.contains(cur)){
             return -1;
         }
+        // if dest is found returns 0;
         if(cur == dest){
             return 0;
         }
 
+        //adds cur to list of visited
         visited.add(cur);
 
+        // if an error is not returned increases length
         int nextStop = helper(cur.next, dest, visited);
         if(nextStop != -1){
-            return nextStop++;
+            return ++nextStop;
         }
 
+        // if cur is a transferstation, goes through each of the tranfers until it finds the dest
         if(cur instanceof TransferStation){
             TransferStation current = (TransferStation) cur;
             for(int i = 0; i < current.otherStations.size(); i++){
                 int transferStop = helper(cur, dest, visited);
                 if(transferStop != -1){
-                    return transferStop++;
+                    return ++transferStop;
                 }
             }
         }
-                
+            
+        // else returns -1;
         return -1;
     }
 
     public void connect(Station a){
 
-        if(this instanceof TransferStation){
+        if(this instanceof TransferStation && this.next != null){
             TransferStation temp = (TransferStation) this;
-            int idx = temp.otherStations.indexOf(a);
-            if(temp.otherStations.get(idx) == ){
-
-            }
             temp.addTransferStationNext(a);
         }
-        if(a instanceof TransferStation){
+        if(a instanceof TransferStation && a.prev != null){
             TransferStation temp = (TransferStation) a;
             temp.addTransferStationPrev(this);
+        }
+        if(a instanceof EndStation){
+            a.next = this;
+            a.prev = this;
+            this.next = a;
+            return;
         }
         if(this.next == null){
             this.next = a;

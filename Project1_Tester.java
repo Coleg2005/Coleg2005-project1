@@ -247,16 +247,12 @@ public class Project1_Tester {
                     "\tSTATION Gallery Place: red line, in service: true, previous station: Metro Center, next station: Judiciary Square\n" +
                     "\tSTATION S3: purple line, in service: true, previous station: S2, next station: Metro Center\n" +
                     "\tSTATION S4: purple line, in service: true, previous station: Metro Center, next station: S5\n";
-                    System.out.println("Minessss: " + next.toString());
-                    System.out.println("Expected: " + expected);
     assertEquals(expected, next.toString());
     next = ((TransferStation) next).otherStations.get(3);
     expected = "STATION S4: purple line, in service: true, previous station: Metro Center, next station: S5";
     assertEquals(expected, next.toString());
     next = next.next;
     expected = "ENDSTATION S5: purple line, in service: true, previous station: S4, next station: S4";
-    System.out.println("Minessss: " + next.toString());
-    System.out.println("Expected: " + expected);
     assertEquals(expected, next.toString());
   }
 
@@ -273,6 +269,10 @@ public class Project1_Tester {
     s3.connect(s4);
     s1.makeEnd();
     s4.makeEnd();
+
+    System.out.println("Exp 1; Mine: " + s1.tripLength(s2));
+    System.out.println("Exp 3; Mine: " + s1.tripLength(s4));
+    System.out.println("Exp 0; Mine: " + s1.tripLength(s1));
 
     assertEquals(1, s1.tripLength(s2));
     assertEquals(3, s1.tripLength(s4));
