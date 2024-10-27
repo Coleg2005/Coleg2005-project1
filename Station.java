@@ -41,49 +41,64 @@ public class Station {
     }
 
     public int tripLength(Station a){
-
-        // Recursive backtracking
-
-        // Write recursive helper method
-
-        //Base cases:
-        // if node had already been visisted, return
-        // if node found, 
-
-        // Find the station then start the count on the way back 
-        // Find the station by going through the whole primarty line, then if not found, switching at transfer station to line not equal to the line just completed.
-        // Could even make another array list of stations weve been to. 
-        // BC: If end station go back 
-        // once at the transfer station - arraylist. contains any lines youve looked at
-
-
-        // Check the current line until transfer and until endstation
-
+        
         ArrayList<Station> visited = new ArrayList<>();
-        Station cur = this;
-        int times = 0;
-        while(times != 2){
-            if(cur == a){
-                // Do what 
-                break;
-            }
-            visited.add(cur);
-        }
-
-
-        return 0;
+        return helper(this, a, visited);
 
     }
 
-    public int helper(){
-        
-        return 0;
+    public int helper(Station cur, Station dest, ArrayList<Station> visited){
+
+        if(cur == null){
+            return -1;
+        }
+        if(visited.contains(cur)){
+            return -1;
+        }
+        if(cur == dest){
+            return 0;
+        }
+
+        visited.add(cur);
+
+        int nextStop = helper(cur.next, dest, visited);
+        if(nextStop != -1){
+            return nextStop++;
+        }
+
+        if(cur instanceof TransferStation){
+            TransferStation current = (TransferStation) cur;
+            for(int i = 0; i < current.otherStations.size(); i++){
+                int transferStop = helper(cur, dest, visited);
+                if(transferStop != -1){
+                    return transferStop++;
+                }
+            }
+        }
+                
+        return -1;
     }
 
     public void connect(Station a){
 
-        this.next = a;
-        a.prev = this;
+        if(this instanceof TransferStation){
+            TransferStation temp = (TransferStation) this;
+            int idx = temp.otherStations.indexOf(a);
+            if(temp.otherStations.get(idx) == ){
+
+            }
+            temp.addTransferStationNext(a);
+        }
+        if(a instanceof TransferStation){
+            TransferStation temp = (TransferStation) a;
+            temp.addTransferStationPrev(this);
+        }
+        if(this.next == null){
+            this.next = a;
+        }
+        if(a.prev == null){
+            a.prev = this;
+        }
 
     }
 

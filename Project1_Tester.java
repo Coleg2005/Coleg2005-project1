@@ -123,7 +123,6 @@ public class Project1_Tester {
                           "\tSTATION Square: blue line, in service: true, previous station: none, next station: Museum\n" + 
                           "\tENDSTATION Plaza: green line, in service: true, previous station: Museum, next station: none\n";
     assertEquals(expected, s1.toString());
-
     TransferStation s4 = new TransferStation("yellow", "Hill");
     s1.addTransferStationPrev(s4);
     expected = "TRANSFERSTATION Museum: pink line, in service: true, previous station: none, next station: none\n\tTransfers: \n" + 
@@ -192,8 +191,6 @@ public class Project1_Tester {
     assertEquals(expected, next.toString());
     next = next.next;
     expected = "ENDSTATION Smithsonian: orange line, in service: true, previous station: Federal Triangle, next station: Federal Triangle";
-    System.out.println(expected);
-    System.out.println(next.toString());
     assertEquals(expected, next.toString());
   }
 
@@ -250,85 +247,89 @@ public class Project1_Tester {
                     "\tSTATION Gallery Place: red line, in service: true, previous station: Metro Center, next station: Judiciary Square\n" +
                     "\tSTATION S3: purple line, in service: true, previous station: S2, next station: Metro Center\n" +
                     "\tSTATION S4: purple line, in service: true, previous station: Metro Center, next station: S5\n";
+                    System.out.println("Minessss: " + next.toString());
+                    System.out.println("Expected: " + expected);
     assertEquals(expected, next.toString());
     next = ((TransferStation) next).otherStations.get(3);
     expected = "STATION S4: purple line, in service: true, previous station: Metro Center, next station: S5";
     assertEquals(expected, next.toString());
     next = next.next;
     expected = "ENDSTATION S5: purple line, in service: true, previous station: S4, next station: S4";
+    System.out.println("Minessss: " + next.toString());
+    System.out.println("Expected: " + expected);
     assertEquals(expected, next.toString());
   }
 
-  // @Test 
-  // public void test11(){
-  //   System.out.println("test short straight trips");
+  @Test 
+  public void test11(){
+    System.out.println("test short straight trips");
 
-  //   EndStation s1 = new EndStation("pink", "Museum");
-  //   Station s2 = new Station("pink", "Square");
-  //   Station s3 = new Station("pink", "Hill");
-  //   EndStation s4 = new EndStation("pink", "Plaza");
-  //   s1.connect(s2);
-  //   s2.connect(s3);
-  //   s3.connect(s4);
-  //   s1.makeEnd();
-  //   s4.makeEnd();
+    EndStation s1 = new EndStation("pink", "Museum");
+    Station s2 = new Station("pink", "Square");
+    Station s3 = new Station("pink", "Hill");
+    EndStation s4 = new EndStation("pink", "Plaza");
+    s1.connect(s2);
+    s2.connect(s3);
+    s3.connect(s4);
+    s1.makeEnd();
+    s4.makeEnd();
 
-  //   assertEquals(1, s1.tripLength(s2));
-  //   assertEquals(3, s1.tripLength(s4));
-  //   assertEquals(0, s1.tripLength(s1));
+    assertEquals(1, s1.tripLength(s2));
+    assertEquals(3, s1.tripLength(s4));
+    assertEquals(0, s1.tripLength(s1));
 
-  // }
+  }
 
-  // @Test 
-  // public void test12(){
-  //   System.out.println("test short transfer trips");
+  @Test 
+  public void test12(){
+    System.out.println("test short transfer trips");
 
-  //   EndStation s1 = new EndStation("pink", "S1");
-  //   Station s2 = new Station("pink", "S2");
-  //   Station s3 = new Station("pink", "S3");
-  //   TransferStation transfer = new TransferStation("blue/pink", "Transfer");
-  //   EndStation s4 = new EndStation("pink", "S4");
-  //   s1.connect(s2);
-  //   s2.connect(s3);
-  //   transfer.addTransferStationPrev(s3);
-  //   transfer.addTransferStationNext(s4);
-  //   s1.makeEnd();
-  //   s4.makeEnd();
+    EndStation s1 = new EndStation("pink", "S1");
+    Station s2 = new Station("pink", "S2");
+    Station s3 = new Station("pink", "S3");
+    TransferStation transfer = new TransferStation("blue/pink", "Transfer");
+    EndStation s4 = new EndStation("pink", "S4");
+    s1.connect(s2);
+    s2.connect(s3);
+    transfer.addTransferStationPrev(s3);
+    transfer.addTransferStationNext(s4);
+    s1.makeEnd();
+    s4.makeEnd();
 
-  //   EndStation b1 = new EndStation("blue", "B1");
-  //   Station b2 = new Station("blue", "B2");
-  //   Station b3 = new Station("blue", "B3");
-  //   Station b4 = new Station("blue", "B4");
-  //   EndStation b5 = new EndStation("blue", "B5");
-  //   b1.connect(b2);
-  //   b2.connect(b3);
-  //   transfer.addTransferStationPrev(b3);
-  //   transfer.connect(b4);
-  //   b4.connect(b5);
-  //   b1.makeEnd();
-  //   b5.makeEnd();
+    EndStation b1 = new EndStation("blue", "B1");
+    Station b2 = new Station("blue", "B2");
+    Station b3 = new Station("blue", "B3");
+    Station b4 = new Station("blue", "B4");
+    EndStation b5 = new EndStation("blue", "B5");
+    b1.connect(b2);
+    b2.connect(b3);
+    transfer.addTransferStationPrev(b3);
+    transfer.connect(b4);
+    b4.connect(b5);
+    b1.makeEnd();
+    b5.makeEnd();
 
-  //   assertEquals(4, s1.tripLength(s4));
-  //   assertEquals(4, s1.tripLength(b3));
-  //   assertEquals(4, s1.tripLength(b4));
-  //   assertEquals(5, s1.tripLength(b5));
-  //   assertEquals(5, b1.tripLength(b5));
-  // }
+    assertEquals(4, s1.tripLength(s4));
+    assertEquals(4, s1.tripLength(b3));
+    assertEquals(4, s1.tripLength(b4));
+    assertEquals(5, s1.tripLength(b5));
+    assertEquals(5, b1.tripLength(b5));
+  }
 
 
-  // @Test 
-  // public void test13(){
-  //   System.out.println("test long trips");
+  @Test 
+  public void test13(){
+    System.out.println("test long trips");
 
-  //   MetroSimulator.initialize();
-  //   MetroSimulator.makeOrangeLine();
-  //   MetroSimulator.makeRedLine();
-  //   MetroSimulator.makePurpleLine();
+    MetroSimulator.initialize();
+    MetroSimulator.makeOrangeLine();
+    MetroSimulator.makeRedLine();
+    MetroSimulator.makePurpleLine();
 
-  //   assertEquals(9, MetroSimulator.va_square.tripLength(MetroSimulator.smithsonian));
-  //   assertEquals(9, MetroSimulator.va_square.tripLength(MetroSimulator.judiciary_square));
-  //   assertEquals(4, MetroSimulator.foggy_bottom.tripLength(MetroSimulator.s4));
-  //   assertEquals(3, MetroSimulator.s2.tripLength(MetroSimulator.gallery_place));
-  // }
+    assertEquals(9, MetroSimulator.va_square.tripLength(MetroSimulator.smithsonian));
+    assertEquals(9, MetroSimulator.va_square.tripLength(MetroSimulator.judiciary_square));
+    assertEquals(4, MetroSimulator.foggy_bottom.tripLength(MetroSimulator.s4));
+    assertEquals(3, MetroSimulator.s2.tripLength(MetroSimulator.gallery_place));
+  }
 
 }
